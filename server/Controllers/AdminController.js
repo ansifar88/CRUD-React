@@ -1,6 +1,7 @@
 const Admin = require('../Models/AdminModel')
 const User = require ("../Models/UserModel")
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 const AdminLogin = async(req,res)=>{
     try {
@@ -76,10 +77,37 @@ const deleteUser = async(req,res) =>{
         console.log();
     }
 }
+const addUser = async(req,res)=>{
+    try {
+        console.log("FN : Add user");
+        const{name,email,mobile,password} = req.body
+        const exists = await User.findOne({email:email})
+        if(exists){
+            console.log("Email Already exists");
+            return res.status(200).json({alert:"email Alredy exists",status :false})
+        }else{
+            const hashPassword = await bcrypt.hash(password,10)
+            const newUser = await User.create({
+                name:name,
+                email:email,
+                mobile:mobile,
+                password:hashPassword
+            })
+            const token = jwt.sign({userId:newUser._id},"jwtSecret",{expiresIn:"1m"})
+            return res.status(200).json({token:token,user:newUser,alert :"Registered",status:true})
+
+        }
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 module.exports = {
     AdminLogin,
     userDatas,
     userDetails,
     updateUser,
-    deleteUser
+    deleteUser,
+    addUser
 }

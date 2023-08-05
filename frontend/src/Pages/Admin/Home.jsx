@@ -5,12 +5,14 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { useNavigate} from 'react-router-dom';
 import { GetUsers,DeleteUser } from '../../Api/AdminApi';
+import { LogoutDetails } from '../../Redux/User/UserSlice';
+import { useDispatch } from 'react-redux';
 
 function Home() {
   const navigate = useNavigate()
   const[users,setUsers] = useState([])
   const[searchInput,setSearchInput] = useState('')
-  console.log(users,"llllllllllllllllll");
+  const dispatch = useDispatch()
 
   useEffect(()=>{
     GetUsers().then(response =>{
@@ -35,6 +37,18 @@ const handleDelete = async(userid)=>{
     console.log("deleted successfulluy");
    }).catch(error => console.error(error))
 }
+const handleLogout=()=>{
+  console.log('user logged out');
+  localStorage.removeItem('admintoken')
+  dispatch(LogoutDetails({
+      id:'',
+      name:'',
+      email:'',
+      mobile:'',
+      image:''
+  }))
+  navigate('/admin/login')
+}
   return (
     <div>
     <Navbar className="bg-body-tertiary">
@@ -46,7 +60,7 @@ const handleDelete = async(userid)=>{
           {/* <Navbar.Text>
             Signed in as: <p><span style={{fontWeight:'bold'}}>{ name }</span></p>
           </Navbar.Text> */}
-          <Button variant="outline-primary mx-2 rounded-2" >LOG OUT</Button>
+          <Button variant="outline-primary mx-2 rounded-2" onClick={handleLogout}>LOG OUT</Button>
 
       
         </Navbar.Collapse>

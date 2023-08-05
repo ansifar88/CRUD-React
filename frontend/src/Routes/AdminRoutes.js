@@ -6,6 +6,7 @@ import EditUser from "../Pages/Admin/EditUser";
 import AddUser from "../Pages/Admin/AddUser";
 
 
+
 function AdminRoutes() {
   return (
     
@@ -15,6 +16,7 @@ function AdminRoutes() {
         <Route exact path="/home" element={<Home/>} />
         <Route exact path="/edituser/:id" element={<EditUser/>} />
         <Route exact path="/addUser" element={<AddUser/>}/>
+        
 
       </Routes>
    

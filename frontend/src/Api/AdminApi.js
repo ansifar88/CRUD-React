@@ -53,9 +53,9 @@ export async function DeleteUser(userid){
         console.log(error.message);
     }
 }
-export async function AddUser(credentials){
+export async function addUser(credentials){
     try {
-        const data = await adminApi.post('/addUser',{credentials})
+        const data = await adminApi.post('/addUser',credentials)
         return data
     } catch (error) {
         console.log(error.message);

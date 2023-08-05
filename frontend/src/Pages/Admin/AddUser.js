@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../Api/AdminApi'
 function AddUser() {
     const[value,setValue] = useState({
         name:"",
@@ -26,8 +27,8 @@ function AddUser() {
            else if (!password) {
             console.log('password is required');
           } else {
-            const response = await AddUser(value)
-            if(response.data){
+            const response = await addUser(value)
+            if(response.data.status){
                 navigate('/admin/home')
             }
           }

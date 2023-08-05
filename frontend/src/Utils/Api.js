@@ -20,13 +20,13 @@ userApi.interceptors.request.use((req)=>{
     return req;
 })
 
-// adminApi.interceptors.request.use((req)=>{
-//     if(localStorage.getItem("token")){
-//         console.log("interceptor");
-//         req.headers.Authorization = "Bearer" + localStorage.getItem("token")
-//         return req;
-//     }
+adminApi.interceptors.request.use((req)=>{
+    if(localStorage.getItem("admintoken")){
+        console.log("interceptor");
+        req.headers.Authorization = "Bearer" + localStorage.getItem("admintoken")
+        return req;
+    }
     
-//     console.log("not the if of interceptor");
-//     return req;
-// })
+    console.log("not the if of interceptor");
+    return req;
+})

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 
 const Admin = require("../Models/AdminModel.js")
 
+
 const userReg = async(req,res)=>{
         try {
 
@@ -54,8 +55,21 @@ const userLogin = async (req,res)=>{
         console.log(error.message);
     }
 }
+const updateImage = async(req,res)=>{
+    try {
+        console.log("FN: image updation");
+        const id = req.body.userId
+        const img = req.file.filename
+        const update = await User.findOneAndUpdate({_id:id},{$set:{image:img}},{new:true}).then((response)=>{
+            res.json({updated:true,data:response})
+        })
+    } catch (error) {
+       console.log(error.message);
+    }
+}
 
 module.exports = {
     userReg,
-    userLogin
+    userLogin,
+    updateImage
 }

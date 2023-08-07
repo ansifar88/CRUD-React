@@ -4,6 +4,8 @@ import Login from "../Pages/Admin/Login";
 import Home from "../Pages/Admin/Home";
 import EditUser from "../Pages/Admin/EditUser";
 import AddUser from "../Pages/Admin/AddUser";
+import AdminPublic from "./AdminPublic";
+import AdminProtect from "./AdminProtect";
 
 
 
@@ -12,10 +14,10 @@ function AdminRoutes() {
     
       <Routes>
 
-        <Route exact path="/login" element={<Login/>} />
-        <Route exact path="/home" element={<Home/>} />
-        <Route exact path="/edituser/:id" element={<EditUser/>} />
-        <Route exact path="/addUser" element={<AddUser/>}/>
+        <Route exact path="/login" element={ <AdminPublic> <Login/>  </AdminPublic>} />
+        <Route exact path="/home" element={ <AdminProtect> <Home/> </AdminProtect> } />
+        <Route exact path="/edituser/:id" element={ <AdminProtect> <EditUser/> </AdminProtect>} />
+        <Route exact path="/addUser" element={ <AdminProtect> <AddUser/> </AdminProtect>}/>
         
 
       </Routes>

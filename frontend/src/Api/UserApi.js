@@ -18,3 +18,20 @@ export async function UserLogin(details){
         console.log(error);
     }
 }
+export async function ProfileUpdation(id,photo){
+    try {
+        const formData = new FormData()
+        formData.append("image",photo)
+        formData.append("userId",id)
+        const confiq  ={
+            header:{
+                'content-type':"multipart/form-data",
+                userId:id
+            },WithCreadentials:true
+        }
+        const response = await userApi.post("/uploadimg",formData,confiq)
+        return response
+    } catch (error) {
+        console.log(error.message);
+    }
+}

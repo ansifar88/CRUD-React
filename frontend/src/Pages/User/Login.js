@@ -35,7 +35,9 @@ const handleSubmit = async (e) =>{
         dispatch(setUserDetails({
           id : response.data.user._id,
           email : response.data.user.email,
-          name : response.data.user.name
+          name : response.data.user.name,
+          mobile : response.data.user.mobile,
+          image : response.data.user.image,
       }))
       navigate('/')
     }

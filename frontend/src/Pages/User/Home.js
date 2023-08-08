@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { LogoutDetails } from '../../Redux/User/UserSlice';
-import { MDBIcon } from 'mdb-react-ui-kit';
 
 function Home() {
   const navigate = useNavigate();
@@ -33,12 +32,7 @@ function Home() {
         <Navbar.Collapse className="justify-content-end ">
         {localStorage.getItem('token') ? (
         <div>
-          <Navbar.Text>
-            <p className='mt-1'>Signed in as :  <span style={{fontWeight:'bold'}}>{ name }</span></p>
-          </Navbar.Text>
           
-      
-         
         <Button variant="outline-danger mx-2 rounded-2" onClick={handleLogout}>LOG OUT</Button>
           <Button variant='outline-success rounded-0' onClick={()=>navigate('/profile')}>PROFILE</Button>
       </div>
@@ -52,7 +46,9 @@ function Home() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-
+      {<div className='main'>
+        <h1>WELCOME <span> {name} </span></h1>
+      </div>}
     </div>
   )
 }

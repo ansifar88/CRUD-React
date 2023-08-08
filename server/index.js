@@ -4,13 +4,14 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const UserRoutes = require('../server/Routes/UserRoutes')
 const AdminRoutes = require('../server/Routes/AdminRoutes')
+require('dotenv').config();
 
 const app = express()
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-mongoose.connect('mongodb://0.0.0.0:27017/crudreact',{
+mongoose.connect(process.env.MONGODB_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{

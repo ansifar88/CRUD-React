@@ -24,7 +24,7 @@ const userReg = async(req,res)=>{
                     mobile:mobile,
                     password:hashPassword
                 })
-                const token = jwt.sign({ userId : newUser._id } , "jwtSecret" ,{ expiresIn : "1m" })
+                const token = jwt.sign({ userId : newUser._id } , process.env.JwtSecretKey ,{ expiresIn : "1m" })
                 return res.status(200).json({ token: token ,user:newUser, alert:'Registred', status: true});
             }
         } catch (error) {
@@ -42,7 +42,7 @@ const userLogin = async (req,res)=>{
             const access = await bcrypt.compare(password,exists.password)
             
             if(access){
-                const token = jwt.sign({ userId: access._id },"jwtSecret" ,{ expiresIn : "1m" })
+                const token = jwt.sign({ userId: access._id },process.env.JwtSecretKey ,{ expiresIn : "1m" })
                 return res.status(200).json({ user:exists, token:token, message:"login", status:true})
 
             }else{

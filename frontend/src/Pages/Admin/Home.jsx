@@ -28,6 +28,7 @@ function Home() {
   }
 
   const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchInput.toLowerCase()) ||
     user.email.toLowerCase().includes(searchInput.toLowerCase())
   );
 const handleDelete = async(userid)=>{

@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AdminLogin } from '../../Api/AdminApi';
 import { useNavigate } from 'react-router-dom';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
@@ -11,20 +13,27 @@ function Login() {
         email : '',
         password : ''
     })
-    
+    const GenerateError = (err) => {
+      toast.error(err, {
+        position: 'top-center',
+        theme: 'colored',
+        autoClose: 3000
+      });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(value,"vaaal");
         const{ email,password } = value
         if(!email){
+          GenerateError("Email is required")
             console.log("email needed");
         } else if (!password){
+          GenerateError("password is required")
             console.log("password needed");
         }else{
             const response = await AdminLogin(value)
             console.log(response,"admin response");
             if(response.data.status){
-                localStorage.setItem("token",response.data.token)
+                localStorage.setItem("admintoken",response.data.token)
                 navigate('/admin/home')
             }
 
@@ -32,6 +41,7 @@ function Login() {
 
     }
   return (
+    <div>
     <div className='formOuter '>
     <Form className='form col-lg-3' onSubmit={handleSubmit} >
         <h1 className='text-white'>  LOGIN  </h1>
@@ -52,6 +62,10 @@ function Login() {
       <hr />
       
     </Form>
+    
+
+    <ToastContainer />
+    </div>
     </div>
   )
 }

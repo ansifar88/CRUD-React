@@ -6,6 +6,7 @@ import './Styles.css'
 import { useDispatch } from 'react-redux';
 import { UserLogin } from '../../Api/UserApi';
 import { setUserDetails } from '../../Redux/User/UserSlice';
+import { toast,ToastContainer } from 'react-toastify';
 
 function Login() {
   const navigate = useNavigate()
@@ -14,16 +15,24 @@ const[value,setValue] = useState({
   email : '',
   password : ''
 })
-
+const GenerateError = (err) => {
+  toast.error(err, {
+    position: 'top-center',
+    theme: 'colored',
+    autoClose: 2000
+  });
+};
 const handleSubmit = async (e) =>{
     e.preventDefault()
     const { email, password } = value
     try {
       if (!email) {
         console.log("no email");
+        GenerateError("email is required")
        
       } else if (!password) {
         console.log("no password");
+        GenerateError("password is required")
        
       } else {
       
@@ -69,6 +78,7 @@ const handleSubmit = async (e) =>{
       <hr />
       <Link to={'/signup'}>Don't Have An Account ?</Link>
     </Form>
+    <ToastContainer/>
     </div>
   )
 }

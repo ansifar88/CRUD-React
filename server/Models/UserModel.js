@@ -4,20 +4,20 @@ const userSchema = new mongoose.Schema({
 
         name : {
             type:String,
-            // required:true
+            required:true
         },
         email : {
             type:String,
-            // required:true,
+            required:true,
 
         },
         mobile:{
             type:Number,
-            // required:true,
+            required:true,
         },
         password:{
             type:String,
-            // required:true,
+            required:true,
         },
         image:{
             type:String,

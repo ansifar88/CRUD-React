@@ -11,7 +11,7 @@ const AdminLogin = async(req,res)=>{
         
         if(exists){
             if(password === exists.password){
-                const token = jwt.sign({adminId : exists._id},"jwtSecret",{expiresIn: "1m"})
+                const token = jwt.sign({adminId : exists._id},process.env.JwtSecretKey,{expiresIn: "1m"})
                 console.log(token,"TOKEN");
                 return res.status(200).json({ admin : exists , token: token, message : "login", status: true})
 

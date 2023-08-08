@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../Api/AdminApi'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 function AddUser() {
     const[value,setValue] = useState({
         name:"",
@@ -12,22 +14,30 @@ function AddUser() {
         mobile:"",
         password:""
     })
+    const GenerateError = (err) => {
+      toast.error(err, {
+        position: 'top-center',
+        theme: 'colored',
+        autoClose: 2000
+      });
+    };
     const navigate = useNavigate()
     const {name,email,mobile,password} = value
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if(!name){
-            console.log("name required");
+            GenerateError("name is required")
         }else if (!email) {
-            console.log('Email is required');
+          GenerateError("Email is required")
           }else if(!mobile){
-            console.log('Mobile is required');
+            GenerateError("Mobile is required")
           }
            else if (!password) {
-            console.log('password is required');
+            GenerateError("password is required")
           } else {
             const response = await addUser(value)
+            GenerateError(response.data.alert)
             if(response.data.status){
                 navigate('/admin/home')
             }
@@ -45,22 +55,22 @@ function AddUser() {
     <Form className='form col-lg-3' onSubmit={handleSubmit} >
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter Name" name='name' onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})}/>
+        <Form.Control type="text" id='name' placeholder="Enter Name" name='name' onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" name='email'  onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})} />
+        <Form.Control type="email" id='email' placeholder="Enter email" name='email'  onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})} />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Mobile Number</Form.Label>
-        <Form.Control type="number" placeholder="Enter Mobile No" name='mobile' onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})}/>
+        <Form.Control type="number" id='mobile' placeholder="Enter Mobile No" name='mobile' onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" name='password' onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})} />
+        <Form.Control type="password" id='password' placeholder="Password" name='password' onChange={(e)=>setValue({...value, [e.target.name] : e.target.value})} />
       </Form.Group>
 
       <Button variant="outline-primary" type="submit">
@@ -69,6 +79,7 @@ function AddUser() {
       <hr />
       
     </Form>
+    <ToastContainer />
     </div>
     </div>
   )

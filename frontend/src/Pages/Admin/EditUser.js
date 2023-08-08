@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { editUserData, userDetails } from '../../Api/AdminApi';
 import { useNavigate, useParams } from 'react-router-dom';
+import {toast,ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function EditUser() {
     const[value,setValue] =useState({
@@ -14,12 +16,22 @@ function EditUser() {
     })
     const{id} = useParams()
     const navigate = useNavigate()
-    
+    const GenerateError = (err) => {
+      toast.error(err, {
+        position: 'top-center',
+        theme: 'colored',
+        autoClose: 2000
+      });
+    };
     useEffect(()=>{
         const userData = async()=>{
             try {
                 const response = await userDetails(id)
-                setValue({name:response.data.user.name,email:response.data.user.email,mobile:response.data.user.mobile})
+                setValue({
+                  name:response.data.user.name,
+                  email:response.data.user.email,
+                  mobile:response.data.user.mobile
+                })
                 
             } catch (error) {
                 console.log(error.message);
@@ -34,12 +46,15 @@ function EditUser() {
             
             if(!value.name){
                 console.log("name required");
+                GenerateError("name is required")
                 return
             }else if(!value.email){
                 console.log("email required");
+                GenerateError("email is required")
                 return    
             }else if(!value.mobile){
             console.log("mobile required");
+            GenerateError("mobile is required")
             return
         }else{
             const response = await editUserData(id,value.name,value.email,value.mobile)
@@ -87,6 +102,7 @@ function EditUser() {
       
       
     </Form>
+    <ToastContainer />
     </div>
     </div>
   )

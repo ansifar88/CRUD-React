@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 function AdminPublic(props) {
 
-    if(localStorage.getItem('AdminToken')) {
+    if(localStorage.getItem('admintoken')) {
         console.log("the public route console");
         return<Navigate to="/admin/home" />
     }

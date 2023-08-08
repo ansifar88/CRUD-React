@@ -31,7 +31,8 @@ const handleSubmit = async (e) => {
         id:response.data.user._id,
         name:response.data.user.name,
         email:response.data.user.email,
-        mobile:response.data.user.mobile
+        mobile:response.data.user.mobile,
+        image:response.data.user.image,
       }))
       navigate('/')
     }
